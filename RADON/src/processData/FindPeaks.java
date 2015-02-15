@@ -5,7 +5,7 @@ import java.util.*;
 
 public class FindPeaks {
 	ArrayList<Waveform> waveforms = new ArrayList<>();
-	HashMap<Float, Integer> eventCounts = new HashMap<>();
+	ArrayList<EventCount> eventCounts = new ArrayList<>();
 
 	public FindPeaks(ArrayList<Waveform> waveforms) {
 		this.waveforms = waveforms;
@@ -58,7 +58,11 @@ public class FindPeaks {
 			if (Math.abs(TtestNonZeroAvg) > Math.abs(TtestZeroAvg)) {
 				//EVENT HAS A NON ZERO TAIL
 				System.out.println("TAIL");
+				eventCounts.add(new EventCount(Float.parseFloat(highestV.getVoltage().toString()),1));
 			}
+		}
+		for(EventCount event : eventCounts) {
+			System.out.println(event);
 		}
 	}
 }

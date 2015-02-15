@@ -9,17 +9,26 @@ public class ProcessRadonData {
 		Waveform wf = null;
 
 		try {
-			wf = loadedWaveForms.loadWaveformFromFile("F:\\Users\\Chris\\git\\Radon\\RADON\\data\\TEST001.csv");
+			File f = new File("F:\\Users\\Chris\\git\\Radon\\RADON\\data\\");
+			ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
+			//wf = loadedWaveForms.loadWaveformFromFile("F:\\Users\\Chris\\git\\Radon\\RADON\\data\\TEST001.csv");
+			for(File file : files){
+				if(file.isFile()){
+					wf = loadedWaveForms.loadWaveformFromFile(file.getCanonicalFile().toString());
+
+					waveforms.add(wf);
+				}
+			}
 			waveforms.add(wf);
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 
 		}
 		//System.out.println(wf);
-		
+
 		FindPeaks findPeaks = new FindPeaks(waveforms);
 		findPeaks.findEventPeaks();
-		
+
 	}
 
 }
