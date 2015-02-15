@@ -1,22 +1,26 @@
 package processData;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Waveform {
 	private static int Id;
+	private Timestamp eventTime;
 	private ArrayList<Point> data;
 	private Point peak;
 
 	
-	public Waveform(int Id, ArrayList<Point> data) {
+	public Waveform(int Id, ArrayList<Point> data,Timestamp eventTime) {
 		this.Id = Id;
+		this.eventTime = eventTime;
 		this.data = data;
 		this.setPeak(detectPeak(data));
 
 	}
 	
 	private Point detectPeak(ArrayList<Point> data) {
-		return new Point(0,0);
+		return new Point(0,new BigDecimal(0));
 	}
 
 	/**
@@ -56,5 +60,11 @@ public class Waveform {
 		this.peak = peak;
 	}
 
-	
+	public String toString() {
+		String output = "";
+		for(Point point: data){
+			output += point.toString()+"\n";
+		}
+		return output;
+	}
 }

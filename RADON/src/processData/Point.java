@@ -1,11 +1,13 @@
 package processData;
 
+import java.math.BigDecimal;
+
 public class Point {
 	
-	private float voltage;
+	private BigDecimal voltage;
 	private long time;
 	
-	public Point(long time, float voltage) {
+	public Point(long time, BigDecimal voltage) {
 		this.voltage = voltage;
 		this.time = time;
 	}
@@ -13,7 +15,7 @@ public class Point {
 	/**
 	 * @return the voltage
 	 */
-	public float getVoltage() {
+	public BigDecimal getVoltage() {
 		return voltage;
 	}
 
@@ -27,7 +29,7 @@ public class Point {
 	/**
 	 * @param voltage the voltage to set
 	 */
-	public void setVoltage(float voltage) {
+	public void setVoltage(BigDecimal voltage) {
 		this.voltage = voltage;
 	}
 
@@ -36,6 +38,10 @@ public class Point {
 	 */
 	public void setTime(long time) {
 		this.time = time;
+	}
+	
+	public String toString() {
+		return this.voltage+","+this.time;
 	}
 
 }
