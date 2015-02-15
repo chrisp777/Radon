@@ -3,7 +3,7 @@ package processData;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class FindPeaks {
+public class FindPeaks implements Runnable {
 	ArrayList<Waveform> waveforms = new ArrayList<>();
 	ArrayList<EventCount> eventCounts = new ArrayList<>();
 
@@ -11,7 +11,8 @@ public class FindPeaks {
 		this.waveforms = waveforms;
 	}
 
-	public void findEventPeaks() {
+	@Override
+	public void run() {
 		for(Waveform waveform : waveforms){
 			Point highestV = new Point(0,new BigDecimal(0));
 			Point lastPoint = new Point(0,new BigDecimal(0));
@@ -51,18 +52,23 @@ public class FindPeaks {
 				lastPoint = point;
 			}
 
-			System.out.println("Highest: "+Float.parseFloat(highestV.getVoltage().toString()));
-			System.out.println("Nonzero avg: "+TtestNonZeroAvg);
-			System.out.println("Zero avg: "+TtestZeroAvg);
+			//System.out.println("Highest: "+Float.parseFloat(highestV.getVoltage().toString()));
+			//System.out.println("Nonzero avg: "+TtestNonZeroAvg);
+			//System.out.println("Zero avg: "+TtestZeroAvg);
 
 			if (Math.abs(TtestNonZeroAvg) > Math.abs(TtestZeroAvg)) {
 				//EVENT HAS A NON ZERO TAIL
-				System.out.println("TAIL");
+				//System.out.println("TAIL");
 				eventCounts.add(new EventCount(Float.parseFloat(highestV.getVoltage().toString()),1));
 			}
 		}
+
+		//System.out.println("");
 		for(EventCount event : eventCounts) {
-			System.out.println(event);
+			//System.out.println(event.getVoltage());
 		}
 	}
+
+
+
 }

@@ -5,29 +5,24 @@ import java.util.*;
 public class ProcessRadonData {
 	public static void main(String[] args) {
 		ArrayList<Waveform> waveforms = new ArrayList<>();
-		LoadWaveforms loadedWaveForms = new LoadWaveforms(waveforms);
-		Waveform wf = null;
-
-		try {
-			File f = new File("F:\\Users\\Chris\\git\\Radon\\RADON\\data\\");
-			ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
-			//wf = loadedWaveForms.loadWaveformFromFile("F:\\Users\\Chris\\git\\Radon\\RADON\\data\\TEST001.csv");
-			for(File file : files){
-				if(file.isFile()){
-					wf = loadedWaveForms.loadWaveformFromFile(file.getCanonicalFile().toString());
-
-					waveforms.add(wf);
-				}
-			}
-			waveforms.add(wf);
-		}
-		catch (Exception e) {
-
-		}
-		//System.out.println(wf);
-
+		File f = new File("F:\\Users\\Chris\\git\\Radon\\RADON\\data\\");
+		
+		LoadWaveforms loadedWaveforms = new LoadWaveforms(waveforms,f);
 		FindPeaks findPeaks = new FindPeaks(waveforms);
-		findPeaks.findEventPeaks();
+		
+		Thread loadTask = new Thread(loadedWaveforms);
+		Thread processTask = new Thread(findPeaks);
+		
+		loadTask.start();
+		// NOTE that currently the speed of the processing overtakes the loading and so a concurrent editing error will be thrown if the loading isn't given a head start
+		try {
+		    Thread.sleep(1000);                 
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		processTask.start();
+
+
 
 	}
 
