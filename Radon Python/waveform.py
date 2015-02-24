@@ -22,6 +22,19 @@ class waveform(object):
             time.append(line[0])
         return time
 
+    @property
+    def range(self):
+        range = float(self.max) - float(self.min)
+        return range
+
+    @property
+    def max(self):
+        return max(self.voltage)
+
+    @property
+    def min(self):
+        return min(self.voltage)
+
     def plot(self):
         plt.interactive(False)
         plt.scatter(self.time, self.voltage, color='r', marker=  '.')
